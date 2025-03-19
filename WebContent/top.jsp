@@ -58,7 +58,8 @@
 			<div class="account-name">
 				<span class="account">
 					<a href="./?user_id=<c:out value="${message.userId}"/>">
-					<c:out value="${message.account}" /></a>
+						<c:out value="${message.account}" />
+					</a>
 				</span>
 				<span class="name"><c:out value="${message.name}" /></span>
 			</div>
