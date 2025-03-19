@@ -42,7 +42,7 @@ public class SettingServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		HttpSession session = request.getSession();
 		User loginUser = (User) session.getAttribute("loginUser");
@@ -59,7 +59,7 @@ public class SettingServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		HttpSession session = request.getSession();
 		List<String> errorMessages = new ArrayList<String>();
@@ -122,7 +122,6 @@ public class SettingServlet extends HttpServlet {
 		if (!StringUtils.isEmpty(email) && (50 < email.length())) {
 			errorMessages.add("メールアドレスは50文字以下で入力してください");
 		}
-
 		if (errorMessages.size() != 0) {
 			return false;
 		}
