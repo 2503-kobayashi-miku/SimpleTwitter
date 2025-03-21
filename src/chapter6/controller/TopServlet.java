@@ -48,11 +48,19 @@ public class TopServlet extends HttpServlet {
 			isShowMessageForm = true;
 		}
 
+		boolean isShowDeleteButton = true;
+		UserMessage message =
+				(UserMessage) request.getSession().getAttribute("message");
+		if(user != null && user.getId() == message.getId()) {
+			isShowDeleteButton =true;
+		}
+
 		String userId = request.getParameter("user_id");
 		List<UserMessage> messages = new MessageService().select(userId);
 
 		request.setAttribute("messages", messages);
 		request.setAttribute("isShowMessageForm", isShowMessageForm);
+		request.setAttribute("isShowDeleteButton", isShowDeleteButton);
 		request.getRequestDispatcher("/top.jsp").forward(request, response);
 	}
 }
