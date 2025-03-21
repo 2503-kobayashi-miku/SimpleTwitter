@@ -59,13 +59,13 @@ public class SettingServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		HttpSession session = request.getSession();
 		List<String> errorMessages = new ArrayList<String>();
 
 		User user = getUser(request);
-		if (isValid(user, errorMessages)) {
+		if (isValid(user, session, errorMessages)) {
 			try {
 				new UserService().update(user);
 			} catch (NoRowsUpdatedRuntimeException e) {
@@ -102,7 +102,7 @@ public class SettingServlet extends HttpServlet {
 	}
 
 
-	private boolean isValid(User user, List<String> errorMessages) {
+	private boolean isValid(User user, HttpSession session, List<String> errorMessages) {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -111,6 +111,10 @@ public class SettingServlet extends HttpServlet {
 		String account = user.getAccount();
 		String email = user.getEmail();
 
+
+		User dupeUser = new UserService().select(account);
+		User loginuser = (User) session.getAttribute("loginUser");
+
 		if (!StringUtils.isEmpty(name) && (20 < name.length())) {
 			errorMessages.add("名前は20文字以下で入力してください");
 		}
@@ -118,6 +122,8 @@ public class SettingServlet extends HttpServlet {
 			errorMessages.add("アカウント名を入力してください");
 		} else if (20 < account.length()) {
 			errorMessages.add("アカウント名は20文字以下で入力してください");
+		} else if ((dupeUser != null) && (!dupeUser.getAccount().equals(loginuser.getAccount()))) {
+			errorMessages.add("すでに存在するアカウントです");
 		}
 		if (!StringUtils.isEmpty(email) && (50 < email.length())) {
 			errorMessages.add("メールアドレスは50文字以下で入力してください");
