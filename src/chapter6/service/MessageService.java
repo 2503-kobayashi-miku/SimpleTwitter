@@ -89,15 +89,68 @@ public class MessageService {
 			close(connection);
 		}
 	}
-	public void delete(Integer userId) {
+
+
+	public List<Message> select(Integer id) {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+		Connection connection = null;
+
+		try {
+			connection = getConnection();
+			List<Message> messages = new MessageDao().select(connection, id);
+			commit(connection);
+
+			return messages;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+
+	public void delete(Integer id) {
+
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			new MessageDao().delete(connection, userId);
+			new MessageDao().delete(connection, id);
+			commit(connection);
+		} catch (RuntimeException e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+
+	public void update(Message message) {
+
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			new MessageDao().update(connection, message);
 			commit(connection);
 		} catch (RuntimeException e) {
 			rollback(connection);
