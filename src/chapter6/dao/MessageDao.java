@@ -70,7 +70,7 @@ public class MessageDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("DELETE FROM authors WHERE id = " + userId);
+			sql.append("DELETE FROM messages WHERE id = " + userId);
 
 			ps = connection.prepareStatement(sql.toString());
 

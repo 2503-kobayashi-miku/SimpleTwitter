@@ -32,9 +32,10 @@ public class DeleteMessageServlet extends HttpServlet {
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-		Integer userId = Integer.parseInt(request.getParameter("user_id"));
+		Integer userId = Integer.parseInt(request.getParameter("id"));
 
 		new MessageService().delete(userId);
+
 		response.sendRedirect("./");
 	}
 }
