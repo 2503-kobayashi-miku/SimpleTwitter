@@ -81,9 +81,9 @@ public class MessageDao {
 
 			ResultSet rs = ps.executeQuery();
 
-			List<Message> messages = toMessage(rs);
+			List<Message> messages = toMessages(rs);
 
-			if(messages.size() == 0) {
+			if(messages.isEmpty()) {
 				return null;
 			}
 			Message message = messages.get(0);
@@ -97,7 +97,7 @@ public class MessageDao {
 	}
 
 
-	private List<Message> toMessage(ResultSet rs) throws SQLException {
+	private List<Message> toMessages(ResultSet rs) throws SQLException {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
