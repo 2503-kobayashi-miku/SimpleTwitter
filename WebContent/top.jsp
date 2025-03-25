@@ -76,7 +76,6 @@
 					<input name="id" value="${message.id}" id="id" type="hidden"/>
 					<input type="submit" value = "削除" />
 				</form>
-
 			</c:if>
 		</div>
 	</c:forEach>

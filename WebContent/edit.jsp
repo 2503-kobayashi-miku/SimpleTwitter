@@ -24,11 +24,11 @@
 				<form action="edit" method="post"><br />
 					<input name="id" value="${message.id}" id="id" type="hidden"/>
 					<label for="text">つぶやき</label>
-					<textarea name="text" cols="100" rows="5">${message.text}</textarea>
+					<textarea name="text" cols="100" rows="5">${message.text}</textarea><br />
 					<input type="submit" value="更新" />（140文字まで）<br />
 					<a href="./">戻る</a>
 				</form>
-				<div class="copyright"> Copyright(c)Your Name</div>
+				<div class="copyright"> Copyright(c)KobayashiMiku</div>
 			</div>
 		</div>
 	</body>

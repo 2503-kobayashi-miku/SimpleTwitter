@@ -30,7 +30,7 @@ public class DeleteMessageServlet extends HttpServlet {
 			throws IOException, ServletException {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		Integer id = Integer.parseInt(request.getParameter("id"));
 
