@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,20 +65,22 @@ public class MessageDao {
 	}
 
 
-	public List<Message> select(Connection connection, Integer id) {
+	public Message select(Connection connection, int id) {
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT * FROM messages WHERE id = " + id;
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT * FROM messages WHERE id = ?");
 
-			ps = connection.prepareStatement(sql);
+			ps = connection.prepareStatement(sql.toString());
+			ps.setInt(1, id);
 
 			ResultSet rs = ps.executeQuery();
 
-			List<Message> messages = toMessage(rs);
-			return messages;
+			Message message = toMessage(rs);
+			return message;
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
@@ -89,40 +89,38 @@ public class MessageDao {
 	}
 
 
-	private List<Message> toMessage(ResultSet rs) throws SQLException {
+	private Message toMessage(ResultSet rs) throws SQLException {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-		List<Message> messages = new ArrayList<Message>();
+		Message message = new Message();
 		try {
 			while (rs.next()) {
-			Message message = new Message();
 			message.setId(rs.getInt("id"));
 			message.setUserId(rs.getInt("user_id"));
 			message.setText(rs.getString("text"));
 			message.setCreatedDate(rs.getTimestamp("created_date"));
 			message.setUpdatedDate(rs.getTimestamp("updated_date"));
-
-			messages.add(message);
 			}
-			return messages;
+			return message;
 		} finally {
 			close(rs);
 		}
 	}
 
 
-	public void delete(Connection connection, Integer id) {
+	public void delete(Connection connection, int id) {
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("DELETE FROM messages WHERE id = " + id);
+			sql.append("DELETE FROM messages WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());
+			ps.setInt(1, id);
 
 			ps.executeUpdate();
 		} catch (SQLException e) {

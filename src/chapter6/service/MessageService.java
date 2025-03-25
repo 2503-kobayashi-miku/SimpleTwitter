@@ -91,7 +91,7 @@ public class MessageService {
 	}
 
 
-	public List<Message> select(Integer id) {
+	public Message select(int id) {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -100,10 +100,10 @@ public class MessageService {
 
 		try {
 			connection = getConnection();
-			List<Message> messages = new MessageDao().select(connection, id);
+			Message message = new MessageDao().select(connection, id);
 			commit(connection);
 
-			return messages;
+			return message;
 		} catch (RuntimeException e) {
 			rollback(connection);
 			log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
@@ -118,7 +118,7 @@ public class MessageService {
 	}
 
 
-	public void delete(Integer id) {
+	public void delete(int id) {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());

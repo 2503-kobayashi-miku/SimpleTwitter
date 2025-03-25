@@ -90,6 +90,9 @@ public class UserService {
 
 	public User select(String account) {
 
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -112,7 +115,7 @@ public class UserService {
 	public User select(int userId) {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-				" : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		Connection connection = null;
 		try {

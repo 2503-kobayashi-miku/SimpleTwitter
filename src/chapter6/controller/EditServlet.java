@@ -47,20 +47,18 @@ public class EditServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		String id = request.getParameter("id");
-		List<Message> messages = null;
+		Message message = null;
 
-		if (id.matches("^[0-9]*$") && !StringUtils.isBlank(id)) {
-			Integer intId = Integer.parseInt(id);
-			messages = new MessageService().select(intId);
+		if (!StringUtils.isBlank(id) && id.matches("^[0-9]*$")) {
+			int intId = Integer.parseInt(id);
+			message = new MessageService().select(intId);
 		}
 
-		if (messages == null || messages.size() == 0) {
+		if (message == null) {
 			session.setAttribute("errorMessages", "不正なパラメータが入力されました");
 			response.sendRedirect("./");
 			return;
 		}
-
-		Message message = messages.get(0);
 
 		request.setAttribute("message",message);
 		request.getRequestDispatcher("edit.jsp").forward(request, response);

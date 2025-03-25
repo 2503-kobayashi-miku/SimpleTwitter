@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import chapter6.logging.InitApplication;
 import chapter6.service.MessageService;
 
 @WebServlet(urlPatterns = { "/deleteMessage" })
@@ -24,15 +25,20 @@ public class DeleteMessageServlet extends HttpServlet {
 	 * デフォルトコンストラクタ
 	 * アプリケーションの初期化を実施する。
 	 */
+	public DeleteMessageServlet() {
+		InitApplication application = InitApplication.getInstance();
+		application.init();
+	}
 
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-		Integer id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter("id"));
 
 		new MessageService().delete(id);
 
