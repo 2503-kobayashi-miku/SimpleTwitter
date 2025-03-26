@@ -41,7 +41,10 @@
 	</div>
 	<c:remove var="errorMessages" scope="session" />
 </c:if>
-
+<form>
+	日付：<input name="start" type="date">～<input name="end" type="date">
+	<input type="submit" value="絞り込み" /><br />
+</form>
 <div class="form-area">
 	<c:if test="${ isShowMessageForm }">
 		<form action="message" method="post">
@@ -68,15 +71,45 @@
 			</div>
 			<div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
 			<c:if test="${message.userId==loginUser.id}">
-				<form action="edit"><br />
+				<form action="edit">
 					<input name="id" value="${message.id}" id="id" type="hidden"/>
-					<input type="submit" value="編集">
+					<input type="submit" value="編集"><br />
 				</form>
-				<form action="deleteMessage" method="post"><br />
+				<form action="deleteMessage" method="post">
 					<input name="id" value="${message.id}" id="id" type="hidden"/>
-					<input type="submit" value="削除" />
+					<input type="submit" value="削除" /><br />
 				</form>
 			</c:if>
+			<div class="form-area">
+				<c:if test="${ isShowMessageForm }">
+					<form action="comment" method="post">
+						<input name="message_id" value="${message.id}" id="id" type="hidden" />
+						<textarea name="text" cols="100" rows="5" class="comment-box"></textarea><br />
+						<input type="submit" value="返信">（140文字まで）<br />
+					</form>
+				</c:if>
+			</div>
+
+			<c:forEach items="${comments}" var="comment">
+				<div class="message">
+					<c:if test="${message.id == comment.messageId}">
+						<div class="account-name">
+							<span class="account">
+								<c:out value="${comment.account}" />
+							</span>
+							<span class="name">
+								<c:out value="${comment.name}" />
+							</span>
+						</div>
+						<div class="text">
+							<pre><c:out value="${comment.text}" /></pre>
+						</div>
+						<div class="date">
+							<fmt:formatDate value="${comment.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
+						</div>
+					</c:if>
+				</div>
+			</c:forEach>
 		</div>
 	</c:forEach>
 </div>

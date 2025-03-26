@@ -57,7 +57,7 @@ public class MessageService {
 	}
 
 
-	public List<UserMessage> select(String userId) {
+	public List<UserMessage> select(String userId, String start, String end) {
 
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -73,7 +73,19 @@ public class MessageService {
 				id = Integer.parseInt(userId);
 			}
 
-			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM);
+			if(start != null) {
+				start += " 00:00:00";
+			} else {
+				start = "2020/01/01 00:00:00";
+			}
+
+			if(end != null) {
+				end += " 23:59:59";
+			} else {
+				end = "2020/01/01 00:00:00";
+			}
+
+			List<UserMessage> messages = new UserMessageDao().select(connection, id, start, end, LIMIT_NUM);
 			commit(connection);
 
 			return messages;
