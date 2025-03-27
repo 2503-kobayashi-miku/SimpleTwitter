@@ -42,7 +42,20 @@
 	<c:remove var="errorMessages" scope="session" />
 </c:if>
 <form>
-	日付：<input name="start" type="date">～<input name="end" type="date">
+	日付：
+	<c:if test="${ empty start }">
+		<input name="start" type="date">
+	</c:if>
+	<c:if test="${ not empty start }">
+		<input name="start" type="date" value="${start}">
+	</c:if>
+	～
+	<c:if test="${ empty end }">
+		<input name="end" type="date">
+	</c:if>
+	<c:if test="${ not empty end }">
+		<input name="end" type="date" value="${end}">
+	</c:if>
 	<input type="submit" value="絞り込み" /><br />
 </form>
 <div class="form-area">
