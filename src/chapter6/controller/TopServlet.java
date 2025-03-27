@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-
 import chapter6.beans.User;
 import chapter6.beans.UserComment;
 import chapter6.beans.UserMessage;
@@ -58,12 +56,8 @@ public class TopServlet extends HttpServlet {
 		List<UserMessage> messages = new MessageService().select(userId, start, end);
 		List<UserComment> comments = new CommentService().select();
 
-		if(!StringUtils.isEmpty(start)) {
-			request.setAttribute("start", start);
-		}
-		if(!StringUtils.isEmpty(end)) {
-			request.setAttribute("end", end);
-		}
+		request.setAttribute("start", start);
+		request.setAttribute("end", end);
 		request.setAttribute("messages", messages);
 		request.setAttribute("comments", comments);
 		request.setAttribute("isShowMessageForm", isShowMessageForm);

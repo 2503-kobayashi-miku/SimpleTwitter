@@ -23,13 +23,13 @@ public class LoginFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
 		HttpSession session = httpRequest.getSession();
 
-		if (session.getAttribute("loginUser") != null) {
-			chain.doFilter(request, response); // サーブレットを実行
-		} else {
+		if (session.getAttribute("loginUser") == null) {
 			session.setAttribute("errorMessages", "ログインしてください");
 			HttpServletResponse httpResponse = (HttpServletResponse)response;
 			httpResponse.sendRedirect("./login");
+			return;
 		}
+		chain.doFilter(request, response); // サーブレットを実行
 	}
 
 

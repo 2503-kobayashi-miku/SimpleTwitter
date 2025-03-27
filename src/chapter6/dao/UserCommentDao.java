@@ -51,11 +51,9 @@ public class UserCommentDao {
 			sql.append("FROM comments ");
 			sql.append("INNER JOIN users ");
 			sql.append("ON comments.user_id = users.id ");
-			sql.append("ORDER BY comments.message_id DESC, comments.created_date ASC limit ?");
+			sql.append("ORDER BY comments.message_id DESC, comments.created_date ASC limit " + num);
 
 			ps = connection.prepareStatement(sql.toString());
-
-			ps.setInt(1, num);
 
 			ResultSet rs = ps.executeQuery();
 

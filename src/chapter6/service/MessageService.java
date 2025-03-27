@@ -71,17 +71,17 @@ public class MessageService {
 			connection = getConnection();
 
 			Integer id = null;
-			if(!StringUtils.isEmpty(userId)) {
+			if(!StringUtils.isBlank(userId)) {
 				id = Integer.parseInt(userId);
 			}
 
-			if(!StringUtils.isEmpty(start)) {
+			if(!StringUtils.isBlank(start)) {
 				start += " 00:00:00";
 			} else {
 				start = "2020/01/01 00:00:00";
 			}
 
-			if(!StringUtils.isEmpty(end)) {
+			if(!StringUtils.isBlank(end)) {
 				end += " 23:59:59";
 			} else {
 				Date date = new Date();

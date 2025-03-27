@@ -50,18 +50,18 @@ public class UserMessageDao {
 			sql.append("FROM messages ");
 			sql.append("INNER JOIN users ");
 			sql.append("ON messages.user_id = users.id ");
+			sql.append("WHERE messages.created_date BETWEEN ? AND ? ");
 			if(id != null) {
-				sql.append("WHERE messages.user_id = ? ");
+				sql.append("AND messages.user_id = ? ");
 			}
-			sql.append("AND messages.created_date BETWEEN ? AND ? ");
 			sql.append("ORDER BY created_date DESC limit " + num);
 
 			ps = connection.prepareStatement(sql.toString());
 
 			if(id != null) {
-				ps.setInt(1, id);
-				ps.setString(2, start);
-				ps.setString(3, end);
+				ps.setString(1, start);
+				ps.setString(2, end);
+				ps.setInt(3, id);
 			} else {
 				ps.setString(1, start);
 				ps.setString(2, end);
