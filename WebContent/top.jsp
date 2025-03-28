@@ -7,6 +7,9 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="./js/vendor/jquery-3.7.1.min.js"></script>
+		<script src="./js/vendor/jquery-3.7.1.js"></script>
+		<script src="./js/main.js"></script>
 		<title>簡易Twitter</title>
 	<link href="./css/style.css" rel="stylesheet" type="text/css">
 	</head>
@@ -88,7 +91,7 @@
 					<input name="id" value="${message.id}" id="id" type="hidden"/>
 					<input type="submit" value="編集"><br />
 				</form>
-				<form action="deleteMessage" method="post">
+				<form action="deleteMessage" method="post" id="delete">
 					<input name="id" value="${message.id}" id="id" type="hidden"/>
 					<input type="submit" value="削除" /><br />
 				</form>
